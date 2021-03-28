@@ -59,8 +59,10 @@ window.onload = () => {
             this.items.filter(good => good.id !== cartItem.id) //deletes item by id
         }
         get totalPrice(){
-            return this.totalPrice = ; // eval total price
+         //   return this.totalPrice = ; // eval total price
         }
+  
+        
     }
     class CartItem {
         constructor(good) {
@@ -69,3 +71,36 @@ window.onload = () => {
     }
     const cart = new Cart();
     const addToCart = (good) => cart.push(new CartItem(good))
+
+    const fetch = (method, url) => {
+      let xhr;
+
+      if (window.XMLHttpRequest) {
+        xhr = new XMLHttpRequest;
+      } else if (window.ActiveXObject){
+        xhr = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+
+      xhr.onreadystatechange = () => {
+        //console.log('state', xhr.readyState);
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+          const images = JSON.parse(xhr.responseText);
+          resolve(images);
+        } else {
+          reject('error with status code: ', + xhr.status);
+        }
+      }
+    }
+
+
+
+      xhr.open(method, url);
+      xhr.timeout = 15000; //settings
+      xhr.send();
+    }
+    const URL = 'https://jsonplaceholder.typicode.com/photos';
+    fetch('GET', URL);
+    .then((data) => {
+      
+    })
